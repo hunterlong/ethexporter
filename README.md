@@ -15,12 +15,16 @@ Clone this repo and then follow the simple steps below!
 `docker build -t hunterlong/ethexporter:latest .`
 
 ##### Run ethexporter
+You'll need access to an ethereum Geth server to fetch balances. You can use [Infura.io](https://infura.io/setup) to quickly get an API key for a geth server.
 `docker run -d -p 9015:9015 -e GETH https://mainnet.infura.io/****KEYHERE hunterlong/ethexporter:latest`
 
 ## Pull from Dockerhub
 Create a `addresses.txt` file with the correct format mentioned above.
 ```
-docker run -d -v addresses.txt:/app/addresses.txt -p 9015:9015 hunterlong/ethexporter:latest
+docker run -d -v addresses.txt:/app/addresses.txt \
+   -p 9015:9015 \
+   -e GETH https://mainnet.infura.io/****KEYHERE \
+   hunterlong/ethexporter:latest
 ```
 The Docker image should be running with the default addresses.
 

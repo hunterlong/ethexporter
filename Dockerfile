@@ -1,10 +1,10 @@
 FROM golang
 
 ADD . /go/src/github.com/hunterlong/ethexporter
-RUN go get /go/src/github.com/hunterlong/ethexporter
+RUN cd /go/src/github.com/hunterlong/ethexporter && go get
 RUN go install github.com/hunterlong/ethexporter
 
-ENV GETH https://mainnet.infura.io/D9oCkP6QUkCLH9Kb37tG
+ENV GETH https://mainnet.infura.io
 ENV PORT 9015
 
 RUN mkdir /app
