@@ -1,5 +1,5 @@
 # ETHexporter
-A lightweight server to record Ethereum address balances for your Prometheus database.
+A lightweight server to record Ethereum address balances for your Prometheus database. ETHexporter attaches to a geth server to fetch ethereum wallet balances for your Grafana dashboards.
 
 ## Watch Addresses
 The `addresses.txt` file holds all the addresses to fetch balances for. Use the format `name:address` on each new line.
@@ -16,15 +16,15 @@ Clone this repo and then follow the simple steps below!
 
 ##### Run ethexporter
 You'll need access to an ethereum Geth server to fetch balances. You can use [Infura.io](https://infura.io/setup) to quickly get an API key for a geth server.
-`docker run -d -p 9015:9015 -e GETH https://mainnet.infura.io/****KEYHERE hunterlong/ethexporter:latest`
+`docker run -d -p 9015:9015 -e GETH="https://mainnet.infura.io/****KEYHERE" hunterlong/ethexporter:latest`
 
 ## Pull from Dockerhub
 Create a `addresses.txt` file with the correct format mentioned above.
 ```
-docker run -d -v addresses.txt:/app/addresses.txt \
-   -p 9015:9015 \
-   -e GETH https://mainnet.infura.io/****KEYHERE \
-   hunterlong/ethexporter:latest
+docker run -d -v ~/ethexporter:/app \
+ -p 9015:9015 \
+ -e GETH=https://mainnet.infura.io/****KEYHERE \
+ hunterlong/ethexporter:latest
 ```
 The Docker image should be running with the default addresses.
 
