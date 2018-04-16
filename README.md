@@ -1,5 +1,5 @@
 # ETHexporter
-A lightweight server to record Ethereum address balances for your Prometheus database. ETHexporter attaches to a geth server to fetch ethereum wallet balances for your Grafana dashboards. If you also wanting a Bitcoin prometheus exporter, you can use [BTCexporter](https://github.com/hunterlong/btcexporter) which uses blockchain.info API.
+A lightweight server to record Ethereum address balances for your Prometheus database. ETHexporter attaches to a geth server to fetch ethereum wallet balances for your Grafana dashboards. Many of you probably want to chart your ERC20 token balances, feel free to use [TOKENexporter](https://github.com/hunterlong/tokenexporter). If you also want a Bitcoin prometheus exporter, you can use [BTCexporter](https://github.com/hunterlong/btcexporter) which uses blockchain.info API.
 
 ## Watch Addresses
 The `addresses.txt` file holds all the addresses to fetch balances for. Use the format `name:address` on each new line.
