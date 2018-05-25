@@ -10,10 +10,10 @@ bittrex:0xFBb1b73C4f0BDa4f67dcA266ce6Ef42f520fBB98
 ```
 
 ## Running the Exporter
-You can easily run this Bitcoin balance prometheus exporter with the docker command:
+You can easily run this Ethereum balance prometheus exporter with the docker command:
 ```
 docker run -it -d -p 9015:9015 \
-  -e "GETH=https://mainnet.infura.io/****KEYHERE" \
+  -e "GETH=https://mainnet.infura.io/****KEYHERE" \ 
   -v /myfolder/addresses.txt:/app/addresses.txt \ 
   hunterlong/ethexporter
 ```
