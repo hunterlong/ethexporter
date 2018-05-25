@@ -1,4 +1,4 @@
-# ETHexporter [![Docker Build Status](https://img.shields.io/docker/build/hunterlong/ethexporter.svg)](https://hub.docker.com/r/hunterlong/btcexporter/)
+# ETHexporter [![Docker Build Status](https://img.shields.io/docker/build/hunterlong/ethexporter.svg)](https://hub.docker.com/r/hunterlong/ethexporter/)
 
 A lightweight Prometheus exporter that will output Ethereum wallet balances from a list of addresses you specify. ETHexporter attaches to a geth server to fetch ethereum wallet balances for your Grafana dashboards. Many of you probably want to chart your ERC20 token balances, feel free to use [TOKENexporter](https://github.com/hunterlong/tokenexporter). If you also want a Bitcoin prometheus exporter, you can use [BTCexporter](https://github.com/hunterlong/btcexporter) which uses blockchain.info API.
 
