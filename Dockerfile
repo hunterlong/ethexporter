@@ -11,4 +11,6 @@ RUN mkdir /app
 WORKDIR /app
 ADD addresses.txt /app
 
+EXPOSE 9015
+
 ENTRYPOINT /go/bin/ethexporter
