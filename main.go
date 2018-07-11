@@ -119,15 +119,17 @@ func main() {
 
 	// check address balances
 	go func() {
-		t1 := time.Now()
 		for {
 			totalLoaded = 0
+			t1 := time.Now()
+			fmt.Printf("Checking %v wallets...\n", len(allWatching))
 			for _, v := range allWatching {
 				v.Balance = GetEthBalance(v.Address).String()
 				totalLoaded++
 			}
 			t2 := time.Now()
 			loadSeconds = t2.Sub(t1).Seconds()
+			fmt.Printf("Finished checking %v wallets in %0.0f seconds, sleeping for %v seconds.\n", len(allWatching), loadSeconds, 15)
 			time.Sleep(15 * time.Second)
 		}
 	}()
