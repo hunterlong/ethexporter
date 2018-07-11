@@ -17,6 +17,9 @@ var (
 	allWatching []*Watching
 	port        string
 	updates     string
+	prefix      string
+	loadSeconds float64
+	totalLoaded int64
 	eth         *ethclient.Client
 )
 
@@ -57,9 +60,20 @@ func ToEther(o *big.Int) *big.Float {
 // HTTP response handler for /metrics
 func MetricsHttp(w http.ResponseWriter, r *http.Request) {
 	var allOut []string
+	total := big.NewFloat(0)
 	for _, v := range allWatching {
-		allOut = append(allOut, fmt.Sprintf("eth_balance{name=\"%v\",address=\"%v\"} %v", v.Name, v.Address, v.Balance))
+		if v.Balance == "" {
+			v.Balance = "0"
+		}
+		bal := big.NewFloat(0)
+		bal.SetString(v.Balance)
+		total.Add(total, bal)
+		allOut = append(allOut, fmt.Sprintf("%veth_balance{name=\"%v\",address=\"%v\"} %v", prefix, v.Name, v.Address, v.Balance))
 	}
+	allOut = append(allOut, fmt.Sprintf("%veth_balance_total %v", prefix, total.String()))
+	allOut = append(allOut, fmt.Sprintf("%veth_load_seconds %0.0f", prefix, loadSeconds))
+	allOut = append(allOut, fmt.Sprintf("%veth_loaded_addresses %v", prefix, totalLoaded))
+	allOut = append(allOut, fmt.Sprintf("%veth_total_addresses %v", prefix, len(allWatching)))
 	fmt.Fprintln(w, strings.Join(allOut, "\n"))
 }
 
@@ -91,6 +105,7 @@ func OpenAddresses(filename string) error {
 func main() {
 	gethUrl := os.Getenv("GETH")
 	port = os.Getenv("PORT")
+	prefix = os.Getenv("PREFIX")
 
 	err := OpenAddresses("addresses.txt")
 	if err != nil {
@@ -104,10 +119,15 @@ func main() {
 
 	// check address balances
 	go func() {
+		t1 := time.Now()
 		for {
+			totalLoaded = 0
 			for _, v := range allWatching {
 				v.Balance = GetEthBalance(v.Address).String()
+				totalLoaded++
 			}
+			t2 := time.Now()
+			loadSeconds = t2.Sub(t1).Seconds()
 			time.Sleep(15 * time.Second)
 		}
 	}()
