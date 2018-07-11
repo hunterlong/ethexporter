@@ -39,7 +39,7 @@ func ConnectionToGeth(url string) error {
 func GetEthBalance(address string) *big.Float {
 	balance, err := eth.BalanceAt(context.TODO(), common.HexToAddress(address), nil)
 	if err != nil {
-		fmt.Printf("Error fetching ETH Balance for address: %v", address)
+		fmt.Printf("Error fetching ETH Balance for address: %v\n", address)
 	}
 	return ToEther(balance)
 }
