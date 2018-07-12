@@ -48,6 +48,17 @@ func GetEthBalance(address string) *big.Float {
 }
 
 //
+// Fetch ETH balance from Geth server
+func CurrentBlock() uint64 {
+	block, err := eth.BlockByNumber(context.TODO(), nil)
+	if err != nil {
+		fmt.Printf("Error fetching current block height: %v\n", err)
+		return 0
+	}
+	return block.NumberU64()
+}
+
+//
 // CONVERTS WEI TO ETH
 func ToEther(o *big.Int) *big.Float {
 	pul, int := big.NewFloat(0), big.NewFloat(0)
@@ -70,8 +81,8 @@ func MetricsHttp(w http.ResponseWriter, r *http.Request) {
 		total.Add(total, bal)
 		allOut = append(allOut, fmt.Sprintf("%veth_balance{name=\"%v\",address=\"%v\"} %v", prefix, v.Name, v.Address, v.Balance))
 	}
-	allOut = append(allOut, fmt.Sprintf("%veth_balance_total %v", prefix, total.String()))
-	allOut = append(allOut, fmt.Sprintf("%veth_load_seconds %0.0f", prefix, loadSeconds))
+	allOut = append(allOut, fmt.Sprintf("%veth_balance_total %0.18f", prefix, total))
+	allOut = append(allOut, fmt.Sprintf("%veth_load_seconds %0.2f", prefix, loadSeconds))
 	allOut = append(allOut, fmt.Sprintf("%veth_loaded_addresses %v", prefix, totalLoaded))
 	allOut = append(allOut, fmt.Sprintf("%veth_total_addresses %v", prefix, len(allWatching)))
 	fmt.Fprintln(w, strings.Join(allOut, "\n"))
@@ -134,7 +145,9 @@ func main() {
 		}
 	}()
 
-	fmt.Printf("ETHexporter has started on port %v using Geth server: %v\n", port, gethUrl)
+	block := CurrentBlock()
+
+	fmt.Printf("ETHexporter has started on port %v using Geth server: %v at block #%v\n", port, gethUrl, block)
 	http.HandleFunc("/metrics", MetricsHttp)
 	panic(http.ListenAndServe("0.0.0.0:"+port, nil))
 }
