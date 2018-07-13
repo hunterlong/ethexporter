@@ -1,6 +1,6 @@
 # ETHexporter [![Docker Build Status](https://img.shields.io/docker/build/hunterlong/ethexporter.svg)](https://hub.docker.com/r/hunterlong/ethexporter/)
 
-A lightweight Prometheus exporter that will output Ethereum wallet balances from a list of addresses you specify. ETHexporter attaches to a geth server to fetch ethereum wallet balances for your Grafana dashboards. Many of you probably want to chart your ERC20 token balances, feel free to use [TOKENexporter](https://github.com/hunterlong/tokenexporter). If you also want a Bitcoin prometheus exporter, you can use [BTCexporter](https://github.com/hunterlong/btcexporter) which uses blockchain.info API.
+A lightweight Prometheus exporter and [Grafana Dashboard](https://grafana.com/dashboards/6970) that will output Ethereum wallet balances from a list of addresses you specify. ETHexporter attaches to a geth server to fetch ethereum wallet balances for your Grafana dashboards. Many of you probably want to chart your ERC20 token balances, feel free to use [TOKENexporter](https://github.com/hunterlong/tokenexporter). If you also want a Bitcoin prometheus exporter, you can use [BTCexporter](https://github.com/hunterlong/btcexporter) which uses blockchain.info API.
 
 ## Watch Addresses
 The `addresses.txt` file holds all the addresses to fetch balances for. Use the format `name:address` on each new line.
@@ -19,7 +19,7 @@ docker run -it -d -p 9015:9015 \
 ```
 
 ## Grafana Dashboard
-ETHexporter includes a [Grafana Dashboard](https://grafana.com/dashboards/6970/edit) so you visualize Ethereum wallet balances with ease. Import Grafana Dashboard ID: `6970` once you've started your
+ETHexporter includes a [Grafana Dashboard](https://grafana.com/dashboards/6970) so you visualize Ethereum wallet balances with ease. Import Grafana Dashboard ID: `6970` once you've started your
 Docker container.
 
 <p align="center"><img width="70%" src="https://img.cjx.io/ethexportergrafana.png"></p>
