@@ -1,8 +1,8 @@
 FROM golang
 
-ADD . /go/src/github.com/hunterlong/ethexporter
-RUN cd /go/src/github.com/hunterlong/ethexporter && go get
-RUN go install github.com/hunterlong/ethexporter
+ADD . /go/src/github.com/apolikamixitos/ethexporter
+RUN cd /go/src/github.com/apolikamixitos/ethexporter && go get
+RUN go install github.com/apolikamixitos/ethexporter
 
 ENV GETH https://mainnet.infura.io
 ENV PORT 9015
