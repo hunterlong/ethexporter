@@ -27,6 +27,7 @@ type Watching struct {
 	Name    string
 	Address string
 	Balance string
+	Exchange string
 }
 
 //
@@ -79,7 +80,7 @@ func MetricsHttp(w http.ResponseWriter, r *http.Request) {
 		bal := big.NewFloat(0)
 		bal.SetString(v.Balance)
 		total.Add(total, bal)
-		allOut = append(allOut, fmt.Sprintf("%veth_balance{name=\"%v\",address=\"%v\"} %v", prefix, v.Name, v.Address, v.Balance))
+		allOut = append(allOut, fmt.Sprintf("%veth_balance{name=\"%v\",address=\"%v\", exchange=\"%v\"} %v", prefix, v.Name, v.Address, v.Exchange, v.Balance))
 	}
 	allOut = append(allOut, fmt.Sprintf("%veth_balance_total %0.18f", prefix, total))
 	allOut = append(allOut, fmt.Sprintf("%veth_load_seconds %0.2f", prefix, loadSeconds))
@@ -103,6 +104,7 @@ func OpenAddresses(filename string) error {
 			w := &Watching{
 				Name:    object[0],
 				Address: object[1],
+				Exchange: object[2],
 			}
 			allWatching = append(allWatching, w)
 		}
